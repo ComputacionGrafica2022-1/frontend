@@ -9,17 +9,6 @@
       <div class="content-center">
         <div class="container">
           <h1 class="title">Andamios</h1>
-          <!-- <div class="text-center">
-            <a href="#pablo" class="btn btn-primary btn-icon btn-round">
-              <i class="fab fa-facebook-square"></i>
-            </a>
-            <a href="#pablo" class="btn btn-primary btn-icon btn-round">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#pablo" class="btn btn-primary btn-icon btn-round">
-              <i class="fab fa-google-plus"></i>
-            </a>
-          </div> -->
         </div>
       </div>
     </div>
@@ -57,7 +46,7 @@
     </div>
     <div class="section text-center" v-if="renderComponent">
       <div class="container">
-        <h2 class="title">Usuarios registrados</h2>
+        <h2 class="title" v-if="users.length > 0">Usuarios registrados</h2>
         <div v-for="user in users" :key="user.id" class="card mx-2" style="width: 20rem;">
           <div class="h2 mr-2 deleteUser" title="Eliminar" @click="deleteUser(user.id)">
             &times;
@@ -158,7 +147,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
 .deleteUser{
   float: right;
   transition: transform .2s;
