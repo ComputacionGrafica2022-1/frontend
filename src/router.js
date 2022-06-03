@@ -4,6 +4,7 @@ import Index from './pages/Index.vue';
 import Landing from './pages/Landing.vue';
 import Andamios from './pages/Andamios.vue';
 import Aires from './pages/Aires.vue';
+import Pruebas from './pages/Pruebas.vue';
 import Login from './pages/Login.vue';
 import Profile from './pages/Profile.vue';
 import MainNavbar from './layout/MainNavbar.vue';
@@ -46,6 +47,15 @@ export default new Router({
       path: '/aires',
       name: 'aires',
       components: { default: Aires, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: 'black' }
+      }
+    },
+    {
+      path: '/pruebas',
+      name: 'pruebas',
+      components: { default: Pruebas, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: 'black' }

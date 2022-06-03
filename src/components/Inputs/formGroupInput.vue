@@ -1,21 +1,22 @@
 <template>
   <div
-    class="form-group"
+    class="form-group col-11 mx-auto"
     :class="[
       { 'input-group': hasIcon },
       { 'has-danger': error },
       { 'input-group-focus': focused },
-      { 'has-label': label || $slots.label }
+      { 'has-label': label || $slots.label },
+      { 'row': inline }
     ]"
   >
     <slot name="label">
-      <label v-if="label" class="control-label" :class="labelClasses">
+      <label v-if="label" class="control-label col-12 my-auto" :class="[{ 'col-md-3 col-lg-3': inline }, labelClasses]">
         {{ label }}
-        <span v-if="required">*</span>
+        <span class="text-danger" v-if="required">*</span>
       </label>
     </slot>
 
-    <div :class="[{ 'input-group': hasIcon }]">
+    <div class="col-12 my-auto px-lg-0 px-md-0" :class="[{ 'input-group': hasIcon }, { 'col-md-9 col-lg-9': inline }, inputGroupClasses]">
       <slot name="addonLeft">
         <div v-if="addonLeftIcon" class="input-group-prepend">
           <i class="input-group-text" :class="addonLeftIcon"></i>
@@ -60,10 +61,12 @@ export default {
   name: 'fg-input',
   props: {
     required: Boolean,
+    inline: Boolean,
     label: String,
     error: String,
     labelClasses: String,
     inputClasses: String,
+    inputGroupClasses: String,
     value: {
       type: [String, Number],
       default: ''

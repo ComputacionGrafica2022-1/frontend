@@ -25,6 +25,9 @@
         <nav-link to="/aires">
           <i class="now-ui-icons design_bullet-list-67"></i> Aires acondicionados
         </nav-link>
+        <nav-link to="/pruebas">
+          <i class="now-ui-icons ui-2_settings-90"></i> Pruebas
+        </nav-link>
       </drop-down>
       <drop-down
               tag="li"
