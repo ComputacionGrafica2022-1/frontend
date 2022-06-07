@@ -133,19 +133,18 @@ export default {
     registerSupplier: function(quote){
       this.validateEmail()
       if(this.validEmail){
-        if(quote.width != 0 && quote.depth != 0 && quote.levels != 0 && quote.levelHeight != 0){
+        if(quote.width > 0 && quote.depth > 0 && quote.levels > 0 && quote.levelHeight > 0){
           axios.post(this.$apiURL+"/scaffoldQuote", quote)
           .then((response) => {
             if(response.data){
-              this.successMessage = "Se ha enviado la solicitud de cotización"
+              this.successMessage = "Te enviaremos la cotización al correo registrado"
             }else{
                 this.errorMessage = "Error registrando proveedor"
             }
             this.restartFields()
-            this.successMessage = "Te enviaremos la cotización al email registrado"
           })
         }else{
-          this.errorMessage = "Todos los campos son obligatorios"
+          this.errorMessage = "Revisa todos los campos"
         }
       }
       this.hideNotifications()
@@ -155,7 +154,7 @@ export default {
       if (emailPattern.test(this.quote.userEmail)) {
           this.validEmail = true;
       } else {
-          this.errorMessage = "Ingresa un email válido"
+          this.errorMessage = "Ingresa un correo válido"
           this.validEmail = false;
           this.hideNotifications()
       }
@@ -168,9 +167,9 @@ export default {
     },
     restartFields(){
       this.quote.userEmail = ""
-      this.quote.width = 0
-      this.quote.depth = 0
-      this.quote.levels = 0
+      this.quote.width = 5
+      this.quote.depth = 5
+      this.quote.levels = 2
       this.quote.wheels = false
       this.quote.type = '2'
       this.hideNotifications()
