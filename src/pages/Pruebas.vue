@@ -175,7 +175,7 @@ export default {
        if(this.userForm.nombre.trim() != "" && this.validEmail){
         axios.post(this.$apiURL+"/user", this.userForm)
         .then((response) => {
-          console.log(response)
+          // console.log(response)
           if(response.data){
             this.message = "Usuario registrado!"
           }else{
@@ -204,8 +204,8 @@ export default {
         .then((response) => {
           if(response.data){
             this.users = response.data
-            console.log("ALL USERS")
-            console.log(this.users)
+            // console.log("ALL USERS")
+            // console.log(this.users)
           }else{
             this.users = []
           }
@@ -214,7 +214,7 @@ export default {
     deleteUser: function(userId){
       axios.delete(this.$apiURL + "/user/" + userId)
         .then((response) => {
-          console.log(response.data)
+          // console.log(response.data)
           this.getUsers()
           this.forceRerender()
         })
@@ -223,7 +223,7 @@ export default {
        if(supplier.name.trim() != ""){
         axios.post(this.$apiURL+"/supplier", supplier)
         .then((response) => {
-          console.log(response)
+          // console.log(response)
           if(response.data){
             this.successMessage = "Proveedor registrado!"
           }else{
@@ -287,7 +287,7 @@ export default {
     deleteSupplier: function(supplierId){
       axios.delete(this.$apiURL + "/supplier/" + supplierId)
         .then((response) => {
-          console.log(response.data)
+          // console.log(response.data)
           this.getSuppliers()
           this.forceRerender()
           this.successMessage = "Proveedor eliminado!"

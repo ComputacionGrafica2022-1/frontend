@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve --port 3000",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "node server.js"
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -15,6 +16,7 @@
     "element-ui": "^2.13.2",
     "eslint": "^7.3.1",
     "eslint-plugin-vue": "^6.2.2",
+    "express": "^4.18.1",
     "nouislider": "^14.6.0",
     "vue": "^2.6.11",
     "vue-lazy-load": "^0.0.7",

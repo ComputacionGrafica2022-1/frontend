@@ -23,7 +23,7 @@ import NowUiKit from './plugins/now-ui-kit';
 Vue.config.productionTip = false;
 
 Vue.use(NowUiKit);
-Vue.prototype.$apiURL = 'http://localhost:8080'
+Vue.prototype.$apiURL = "https://aaa-api.loca.lt/"
 
 new Vue({
   router,
