@@ -11,6 +11,14 @@
           <img class="n-logo" src="img/AAA-logo2-index.png" alt="" />
           <h1 class="h1-seo">Andamios y Aires acondicionados</h1>
           <h3>Cotizaciones a la medida</h3>
+          <div>
+            <router-link to="/andamios">
+              <a class="btn btn-primary btn-round btn-lg">Andamio</a>
+            </router-link>
+            <router-link to="/aires">
+              <a class="btn btn-primary btn-round btn-lg ml-lg-3">Aire acondicionado</a>
+            </router-link>
+        </div>
         </div>
         <h5 class="category category-absolute">
           UNAL - Computación Gráfica 2022-I
@@ -64,7 +72,7 @@
     </div> -->
     <!-- <signup-form></signup-form> -->
     <!-- <examples-section></examples-section> -->
-    <download-section></download-section>
+    <!-- <download-section></download-section> -->
   </div>
 </template>
 <script>

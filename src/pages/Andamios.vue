@@ -72,7 +72,7 @@
         </div>
         <div class="row">
           <div class="send-button mt-4 col-lg-6 col-md-8 mx-auto">
-              <n-button type="primary" round block size="lg" @click="registerSupplier(quote)">Cotizar</n-button>
+              <n-button type="primary" round block size="lg" @click="registerQuote(quote)">Cotizar</n-button>
             </div>
         </div>
       </div>
@@ -130,7 +130,7 @@ export default {
     selectTipo: function(id){
       this.quote.type = id;
     },
-    registerSupplier: function(quote){
+    registerQuote: function(quote){
       this.validateEmail()
       if(this.validEmail){
         if(quote.width > 0 && quote.depth > 0 && quote.levels > 0 && quote.levelHeight > 0){
