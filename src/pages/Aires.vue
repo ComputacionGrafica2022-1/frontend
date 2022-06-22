@@ -51,7 +51,16 @@
                   <label class="my-auto text-center font-weight-bold">Número de difusores</label>
                 </div>
                 <div class="col-6 col-lg-4 col-md-4 m-auto">
-                  <input type="number" class="form-control mt-2 mt-lg-0 mt-md-0" min="0" @change="quote.nDiffusers=Math.floor(quote.nDiffusers)" v-model="quote.nDiffusers"/>
+                  <input type="number" class="form-control mt-2 mt-lg-0 mt-md-0" min="0" @change="quote.diffusers=Math.floor(quote.diffusers)" v-model="quote.diffusers"/>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-12 col-lg-8 col-md-8">
+                  <label class="my-auto text-center font-weight-bold">Camino de ductos</label>
+                  <span class="description my-auto ml-2">(dwg)</span>
+                </div>
+                <div class="col-6 col-lg-4 col-md-4 m-auto">
+                  <input type="file" accept=".dwg" class="t-2 mt-lg-0 mt-md-0" @change="handleFileUpload( $event )"/>
                 </div>
               </div>
             </div>
@@ -127,10 +136,12 @@ export default {
         mass: "12000",
         length: null,
         thickness: null,
-        nDiffusers: null,
+        diffusers: null,
         type: '1',
         done: false
       },
+      fileUploaded: '',
+      validFile: false,
       validEmail: false,      
       renderComponent: true,
       successMessage : "",
@@ -144,24 +155,78 @@ export default {
     selectTipo: function(id){
       this.quote.type = id;
     },
+    // registerQuote: function(quote){
+    //   this.validateEmail()
+    //   if(this.validEmail){
+    //     if(quote.mass > 0 && quote.length > 0 && quote.thickness > 0 && quote.diffusers > 0 && this.file != ''){
+    //       this.uploadFile().then(() => {
+    //         if(validFile){
+    //           axios.post(this.$apiURL+"/airQuote", quote)
+    //           .then((response) => {
+    //             if(response.data){
+    //               this.successMessage = "Te enviaremos la cotización al correo registrado"
+    //             }else{
+    //                 this.errorMessage = "Error registrando proveedor"
+    //             }
+    //             this.restartFields()
+    //           })
+    //         }else{
+    //           this.errorMessage = "Carga un archivo válido"
+    //         }
+    //       })
+    //     }else{
+    //       this.errorMessage = "Revisa todos los campos"
+    //     }
+    //   }
+    //   this.hideNotifications()
+    // },
     registerQuote: function(quote){
       this.validateEmail()
+      let fileExtension = ''
       if(this.validEmail){
-        if(quote.mass > 0 && quote.length > 0 && quote.thickness > 0 && quote.nDiffusers > 0){
-          axios.post(this.$apiURL+"/airQuote", quote)
-          .then((response) => {
-            if(response.data){
-              this.successMessage = "Te enviaremos la cotización al correo registrado"
-            }else{
-                this.errorMessage = "Error registrando proveedor"
+        if((quote.type == 1 && quote.mass > 0) || (quote.type == 2 && quote.mass > 0 && quote.length > 0 && quote.thickness > 0 && quote.diffusers > 0 && this.fileUploaded != '')){
+          try {
+            if(quote.type == 2){
+              fileExtension = this.fileUploaded.name.substring(this.fileUploaded.name.lastIndexOf('.') + 1)
             }
-            this.restartFields()
-          })
+            if (quote.type == 2 && fileExtension != 'dwg'){
+              this.errorMessage = "Archivo inválido"    
+            }else{
+              let formData = new FormData();
+              formData.append("file", this.fileUploaded)
+              formData.append("quote", JSON.stringify(quote))
+              axios.post(this.$apiURL+"/airQuote", formData, { headers: { 'content-type': 'multipart/form-data'} })
+              .then((response) => {
+                if(response.data){
+                  this.successMessage = "Te enviaremos la cotización al correo registrado"
+                }else{
+                    this.errorMessage = "Error registrando proveedor"
+                }
+                this.restartFields()
+              })
+            }
+          } catch (error) {
+            this.errorMessage = "Archivo inválido"  
+          }
         }else{
           this.errorMessage = "Revisa todos los campos"
         }
       }
       this.hideNotifications()
+    },
+    handleFileUpload: function( event ){
+      this.fileUploaded = event.target.files[0];
+      console.log(this.fileUploaded)
+    },
+    async uploadFile(){
+      let formData = new FormData();
+      formData.append("file", this.file)
+      const response = await axios.post(this.$apiURL+"/uploadFile", formData);
+      if(response.status == 200) {
+        this.validFile = true;
+      } else {
+        this.validFile = false;
+      }
     },
     validateEmail() {      
       const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -180,11 +245,12 @@ export default {
       }, 4000);
     },
     restartFields(){
-      this.quote.userEmail = "",
-      this.quote.mass = "12000",
-      this.quote.length = null,
-      this.quote.thickness = null,
-      this.quote.nDiffusers = null,
+      this.quote.userEmail = ""
+      this.quote.mass = "12000"
+      this.quote.length = null
+      this.quote.thickness = null
+      this.quote.diffusers = null
+      this.file = ''
       // this.quote.type = '1',
       this.quote.done = false
             

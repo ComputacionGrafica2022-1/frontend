@@ -24,6 +24,7 @@ Vue.config.productionTip = false;
 
 Vue.use(NowUiKit);
 Vue.prototype.$apiURL = "https://aaa-api.loca.lt"
+// Vue.prototype.$apiURL = "http://localhost:8080"
 
 new Vue({
   router,
