@@ -216,7 +216,7 @@ export default {
     },
     handleFileUpload: function( event ){
       this.fileUploaded = event.target.files[0];
-      console.log(this.fileUploaded)
+      // console.log(this.fileUploaded)
     },
     async uploadFile(){
       let formData = new FormData();
