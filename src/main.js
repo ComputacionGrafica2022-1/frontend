@@ -23,7 +23,8 @@ import NowUiKit from './plugins/now-ui-kit';
 Vue.config.productionTip = false;
 
 Vue.use(NowUiKit);
-Vue.prototype.$apiURL = "https://aaa-api.loca.lt"
+Vue.prototype.$apiURL = " https://17ed-20-64-114-63.ngrok.io"
+// Vue.prototype.$apiURL = "https://aaa-api.loca.lt"
 // Vue.prototype.$apiURL = "http://localhost:8080"
 
 new Vue({
