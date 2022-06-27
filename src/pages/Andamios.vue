@@ -34,11 +34,11 @@
             <div class="row">
               <div class="col-lg-6 col-md-6">
                 <n-radio v-model="quote.type" label="1">Tipo 1</n-radio>
-                <img class="tipoAndamio" src="img/andamioTipo1.jpg" alt="Andamio Tipo 1" @click="selectTipo('1')"/>
+                <img class="tipoAndamio" src="img/andamioTipo1.jpg" alt="Andamio con ruedas"  title="Andamio con ruedas" @click="selectTipo('1')"/>
               </div>
               <div class="col-lg-6 col-md-6">
                 <n-radio v-model="quote.type" label="2">Tipo 2</n-radio>
-                <img class="tipoAndamio" src="img/andamioTipo2.png" alt="Andamio Tipo 2" @click="selectTipo('2')"/>
+                <img class="tipoAndamio" src="img/andamioTipo2.jpg" alt="Andamio sin ruedas"  title="Andamio sin ruedas" @click="selectTipo('2')"/>
               </div>
             </div>
           </div>
