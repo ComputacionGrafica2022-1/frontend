@@ -29,10 +29,10 @@
               <div class="row my-2">
                 <div class="col-12 col-lg-6 col-md-6 my-auto">
                   <label class=" font-weight-bold my-auto">Capacidad</label>
-                  <span class="description ml-2 my-auto">(Unidades)</span>
+                  <span class="description ml-2 my-auto">(Toneladas de aire)</span>
                 </div>
                 <div class="d-flex justify-content-around col-6 m-auto"  v-if="quote.unitType == 1">
-                  <n-radio v-model="quote.capacity" class="mx-4" label="9">9</n-radio>
+                  <n-radio v-model="quote.capacity" class="mx-4" label="9">09</n-radio>
                   <n-radio v-model="quote.capacity" class="mx-4" label="12">12</n-radio>
                 </div>
                 <div class="d-flex justify-content-around col-6 m-auto" v-else>
@@ -46,7 +46,7 @@
               <div class="row my-2">
                 <div class="col-12 col-lg-6 col-md-6 my-auto">
                   <label class="text-center font-weight-bold my-auto">Voltaje</label>
-                  <span class="description ml-2 my-auto">(Unidades)</span>
+                  <span class="description ml-2 my-auto">(V)</span>
                 </div>
                 <div class="d-flex justify-content-around col-6  m-auto">
                   <n-radio v-model="quote.voltage" label="110">110</n-radio>
