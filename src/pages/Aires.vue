@@ -19,48 +19,48 @@
         <div class="row">
           <div class="col-lg-6 mx-auto mb-4">
             <div class="col-11 my-2 mx-auto mb-4">
-              <label class="my-auto text-center font-weight-bold">Masa de aire</label>
-              <span class="description my-auto ml-2">(Toneladas)</span>
+              <label class="my-auto text-center font-weight-bold">Tipo de sistema</label>
               <div class="d-flex justify-content-around mt-2">
-                <n-radio v-model="quote.mass" label="12000">12000</n-radio>
-                <n-radio v-model="quote.mass" label="18000">18000</n-radio>
-                <n-radio v-model="quote.mass" label="24000">24000</n-radio>
+                <n-radio v-model="quote.systemType" label="1">Solo enfriadora</n-radio>
+                <n-radio v-model="quote.systemType" label="2">Calentadora</n-radio>
               </div>
             </div>
-            <div class="col-11 my-2 mx-auto" v-if="quote.type==='2'">
+            <div class="col-11 my-2 mx-auto mb-4">
               <div class="row my-2">
-                <div class="col-12 col-lg-8 col-md-8">
-                  <label class="my-auto text-center font-weight-bold">Longitud de ductos</label>
-                  <span class="description my-auto ml-2">(Metros)</span>
+                <div class="col-12 col-lg-6 col-md-6 my-auto">
+                  <label class=" font-weight-bold my-auto">Capacidad</label>
+                  <span class="description ml-2 my-auto">(Unidades)</span>
                 </div>
-                <div class="col-6 col-lg-4 col-md-4 m-auto">
-                  <input type="number" class="form-control mt-2 mt-lg-0 mt-md-0" v-model="quote.length"/>
+                <div class="d-flex justify-content-around col-6 m-auto"  v-if="quote.unitType == 1">
+                  <n-radio v-model="quote.capacity" class="mx-4" label="9">9</n-radio>
+                  <n-radio v-model="quote.capacity" class="mx-4" label="12">12</n-radio>
+                </div>
+                <div class="d-flex justify-content-around col-6 m-auto" v-else>
+                  <n-radio v-model="quote.capacity" label="12">12</n-radio>
+                  <n-radio v-model="quote.capacity" label="18">18</n-radio>
+                  <n-radio v-model="quote.capacity" label="24">24</n-radio>
                 </div>
               </div>
+            </div>
+            <div class="col-11 my-2 mx-auto mb-4">
               <div class="row my-2">
-                <div class="col-12 col-lg-8 col-md-8">
-                  <label class="my-auto text-center font-weight-bold">Grosor de lámina</label>
-                  <span class="description my-auto ml-2">(Milímetros)</span>
+                <div class="col-12 col-lg-6 col-md-6 my-auto">
+                  <label class="text-center font-weight-bold my-auto">Voltaje</label>
+                  <span class="description ml-2 my-auto">(Unidades)</span>
                 </div>
-                <div class="col-6 col-lg-4 col-md-4 m-auto">
-                  <input type="number" class="form-control mt-2 mt-lg-0 mt-md-0" v-model="quote.thickness"/>
+                <div class="d-flex justify-content-around col-6  m-auto">
+                  <n-radio v-model="quote.voltage" label="110">110</n-radio>
+                  <n-radio v-model="quote.voltage" label="230">230</n-radio>
                 </div>
               </div>
+            </div>
+            <div class="col-11 my-2 mx-auto mb-4">
               <div class="row my-2">
-                <div class="col-12 col-lg-8 col-md-8">
-                  <label class="my-auto text-center font-weight-bold">Número de difusores</label>
+                <div class="col-12 col-lg-6 col-md-6 my-auto">
+                  <label class="my-auto text-center font-weight-bold">Cantidad</label>
                 </div>
                 <div class="col-6 col-lg-4 col-md-4 m-auto">
-                  <input type="number" class="form-control mt-2 mt-lg-0 mt-md-0" min="0" @change="quote.diffusers=Math.floor(quote.diffusers)" v-model="quote.diffusers"/>
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-12 col-lg-8 col-md-8">
-                  <label class="my-auto text-center font-weight-bold">Camino de ductos</label>
-                  <span class="description my-auto ml-2">(dwg)</span>
-                </div>
-                <div class="col-6 col-lg-4 col-md-4 m-auto">
-                  <input type="file" accept=".dwg" class="t-2 mt-lg-0 mt-md-0" @change="handleFileUpload( $event )"/>
+                  <input type="number" class="form-control mt-2 mt-lg-0 mt-md-0" v-model="quote.quantity"/>
                 </div>
               </div>
             </div>
@@ -69,11 +69,11 @@
             <label class="my-auto text-left font-weight-bold">Tipo</label>
             <div class="row">
               <div class="col-lg-6 col-md-6">
-                <n-radio v-model="quote.type" label="1">De pared</n-radio>
+                <n-radio v-model="quote.unitType" label="1">De pared</n-radio>
                 <img class="tipoAndamio" src="img/aireTipo1.png" alt="Aire Acondicionado Tipo 1" @click="selectTipo('1')"/>
               </div>
               <div class="col-lg-6 col-md-6">
-                <n-radio v-model="quote.type" label="2">Unidad externa</n-radio>
+                <n-radio v-model="quote.unitType" label="2">Unidad externa</n-radio>
                 <img class="tipoAndamio" src="img/aireTipo2.png" alt="Aire Acondicionado Tipo 2" @click="selectTipo('2')"/>
               </div>
             </div>
@@ -83,9 +83,22 @@
           <div class="mt-4 col-lg-6 col-md-8 mx-auto">
               <fg-input
                 class="input-lg"
+                placeholder="Name"
+                v-model="quote.userName"
+                addon-left-icon="now-ui-icons users_circle-08"
+                label="Name"
+                inline
+              >
+              </fg-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-8 mx-auto">
+              <fg-input
+                class="input-lg"
                 placeholder="Email"
                 v-model="quote.userEmail"
-                addon-left-icon="now-ui-icons users_circle-08"
+                addon-left-icon="now-ui-icons ui-1_email-85"
                 label="Email"
                 @change="validateEmail()"
                 required
@@ -133,15 +146,14 @@ export default {
     return {
       quote: {
         userEmail: "",
-        mass: "12000",
-        length: null,
-        thickness: null,
-        diffusers: null,
-        type: '1',
+        userName: "",
+        unitType: "1",
+        systemType: "1",
+        capacity: "12",
+        voltage: "110",
+        quantity: 1,
         done: false
       },
-      fileUploaded: '',
-      validFile: false,
       validEmail: false,      
       renderComponent: true,
       successMessage : "",
@@ -153,80 +165,26 @@ export default {
   },
   methods: {
     selectTipo: function(id){
-      this.quote.type = id;
+      this.quote.unitType = id;
     },
-    // registerQuote: function(quote){
-    //   this.validateEmail()
-    //   if(this.validEmail){
-    //     if(quote.mass > 0 && quote.length > 0 && quote.thickness > 0 && quote.diffusers > 0 && this.file != ''){
-    //       this.uploadFile().then(() => {
-    //         if(validFile){
-    //           axios.post(this.$apiURL+"/airQuote", quote)
-    //           .then((response) => {
-    //             if(response.data){
-    //               this.successMessage = "Te enviaremos la cotización al correo registrado"
-    //             }else{
-    //                 this.errorMessage = "Error registrando proveedor"
-    //             }
-    //             this.restartFields()
-    //           })
-    //         }else{
-    //           this.errorMessage = "Carga un archivo válido"
-    //         }
-    //       })
-    //     }else{
-    //       this.errorMessage = "Revisa todos los campos"
-    //     }
-    //   }
-    //   this.hideNotifications()
-    // },
     registerQuote: function(quote){
       this.validateEmail()
-      let fileExtension = ''
       if(this.validEmail){
-        if((quote.type == 1 && quote.mass > 0) || (quote.type == 2 && quote.mass > 0 && quote.length > 0 && quote.thickness > 0 && quote.diffusers > 0 && this.fileUploaded != '')){
-          try {
-            if(quote.type == 2){
-              fileExtension = this.fileUploaded.name.substring(this.fileUploaded.name.lastIndexOf('.') + 1)
-            }
-            if (quote.type == 2 && fileExtension != 'dwg'){
-              this.errorMessage = "Archivo inválido"    
+        if(quote.unitType != "" && quote.systemType != "" && quote.capacity != "" && quote.voltage != "" && quote.quantity > 0){  
+          axios.post(this.$apiURL+"/airQuote", quote)
+          .then((response) => {
+            if(response.data){
+              this.successMessage = "Te enviaremos la cotización al correo registrado"
             }else{
-              let formData = new FormData();
-              formData.append("file", this.fileUploaded)
-              formData.append("quote", JSON.stringify(quote))
-              axios.post(this.$apiURL+"/airQuote", formData, { headers: { 'content-type': 'multipart/form-data'} })
-              .then((response) => {
-                if(response.data){
-                  this.successMessage = "Te enviaremos la cotización al correo registrado"
-                }else{
-                    this.errorMessage = "Error registrando proveedor"
-                }
-                this.restartFields()
-              })
+                this.errorMessage = "Error registrando proveedor"
             }
-          } catch (error) {
-            this.errorMessage = "Archivo inválido"  
-          }
+            this.restartFields()
+          })
         }else{
           this.errorMessage = "Revisa todos los campos"
         }
       }
       this.hideNotifications()
-    },
-    handleFileUpload: function( event ){
-      this.fileUploaded = event.target.files[0];
-      // console.log(this.fileUploaded)
-    },
-    async uploadFile(){
-      let formData = new FormData();
-      formData.append("file", this.file)
-      const response = await axios.post(this.$apiURL+"/uploadFile", formData);
-      if(response.status == 200) {
-        this.validFile = true;
-      } else {
-        this.validFile = false;
-      }
     },
     validateEmail() {      
       const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -246,12 +204,11 @@ export default {
     },
     restartFields(){
       this.quote.userEmail = ""
-      this.quote.mass = "12000"
-      this.quote.length = null
-      this.quote.thickness = null
-      this.quote.diffusers = null
-      this.file = ''
-      // this.quote.type = '1',
+      this.quote.userName = ""      
+      this.quote.systemType = "1"
+      this.quote.capacity = "12"
+      this.quote.voltage = "110"
+      this.quote.quantity = 1
       this.quote.done = false
             
       this.hideNotifications()
